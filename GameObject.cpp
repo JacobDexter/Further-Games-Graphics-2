@@ -1,16 +1,15 @@
 #include "GameObject.h"
 
-GameObject::GameObject(string type, Appearance* appearance, Transform* transform, ParticleModel* particleModel) : _type(type), _appearance(appearance), _transform(transform), _particleModel(particleModel)
+GameObject::GameObject(string type, Appearance* appearance, Transform* transform, PhysicsModel* physicsModel) : _type(type), _appearance(appearance), _transform(transform), _physicsModel(physicsModel)
 {
 	_parent = nullptr;
-	_world = XMFLOAT4X4();
 }
 
 GameObject::~GameObject()
 {
 	if (_transform) delete _transform; 
 	if (_appearance) delete _appearance;
-	if (_particleModel) delete _particleModel;
+	if (_physicsModel) delete _physicsModel;
 	if (_parent) delete _parent;
 }
 
@@ -22,11 +21,11 @@ void GameObject::Update(float t)
 	XMMATRIX translation = XMMatrixTranslation(_transform->GetPosition().x, _transform->GetPosition().y, _transform->GetPosition().z);
 
 	XMStoreFloat4x4(&_world, scale * rotation * translation);
-
-	//debug
-	OutputDebugStringA((_type + " " + to_string(_transform->GetPosition().show_X()) + " " + to_string(_transform->GetPosition().show_Y()) + "\n").c_str());
-
-	_particleModel->Update(t);
+	
+	if (!_isStatic)
+	{
+		_physicsModel->Update(1.0f / t);
+	}
 
 	if (_parent != nullptr)
 	{

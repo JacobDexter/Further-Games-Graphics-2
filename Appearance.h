@@ -30,16 +30,16 @@ public:
 
 	void Draw(ID3D11DeviceContext* pImmediateContext);
 
-	Geometry GetGeometryData() const { return _geometry; }
-	Material GetMaterial() const { return _material; }
+	Geometry GetGeometryData() const { return mGeometry; }
+	Material GetMaterial() const { return mMaterial; }
 
 	//texturing
-	void SetTextureRV(ID3D11ShaderResourceView* textureRV) { _textureRV = textureRV; }
-	ID3D11ShaderResourceView* GetTextureRV() const { return _textureRV; }
-	bool HasTexture() const { return _textureRV ? true : false; }
+	void SetTextureRV(ID3D11ShaderResourceView* textureRV) { mTextureRV = textureRV; }
+	ID3D11ShaderResourceView* GetTextureRV() const { return mTextureRV; }
+	bool HasTexture() const { return mTextureRV ? true : false; }
 private:
-	Geometry _geometry;
-	Material _material;
+	Geometry mGeometry;
+	Material mMaterial;
 
-	ID3D11ShaderResourceView* _textureRV;
+	ID3D11ShaderResourceView* mTextureRV;
 };

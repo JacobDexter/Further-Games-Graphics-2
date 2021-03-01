@@ -155,23 +155,26 @@ HRESULT Application::Initialise(HINSTANCE hInstance, int nCmdShow)
 	noSpecMaterial.specularPower = 0.0f;
 
 	Transform* transform = new Transform(Vector3D(0.0f, 0.0f, 0.0f), Vector3D(XMConvertToRadians(90.0f), 0.0f, 0.0f), Vector3D(15.0f, 15.0f, 15.0f));
-	GameObject* gameObject = new GameObject("Floor", new Appearance(planeGeometry, noSpecMaterial), transform, new ParticleModel(transform, false, Vector3D(0.0f, 0.0f, 0.0f), false, Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.0f, 0.0f, 0.0f)));
+	GameObject* gameObject = new GameObject("Floor", new Appearance(planeGeometry, noSpecMaterial), transform, new PhysicsModel(transform));
 	gameObject->GetAppearance()->SetTextureRV(_pGroundTextureRV);
+	gameObject->SetIsStatic(true);
 
 	_gameObjects.push_back(gameObject);
 
 	for (auto i = 0; i < NUMBER_OF_CUBES; i++)
 	{
-		Transform* transform1 = new Transform(Vector3D(-4.0f + (i * 2.0f), 0.5f, 10.0f), Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.5f, 0.5f, 0.5f));
-		gameObject = new GameObject("Cube", new Appearance(cubeGeometry, shinyMaterial), transform1, new ParticleModel(transform1, false, Vector3D(0.0f, 0.0f, 0.0f), false, Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.0f, 0.0f, 0.0f)));
+		Transform* transform1 = new Transform(Vector3D(-4.0f + (i * 2.0f), 2.0f, 10.0f), Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.5f, 0.5f, 0.5f));
+		gameObject = new GameObject("Cube", new Appearance(cubeGeometry, shinyMaterial), transform1, new PhysicsModel(transform1));
 		gameObject->GetAppearance()->SetTextureRV(_pTextureRV);
+		gameObject->SetIsStatic(false);
 
 		_gameObjects.push_back(gameObject);
 	}
 
 	Transform* transform2 = new Transform(Vector3D(0.0f, 3.0f, 10.0f), Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.5f, 0.5f, 0.5f));
-	gameObject = new GameObject("donut", new Appearance(herculesGeometry, shinyMaterial), transform2, new ParticleModel(transform2, true, Vector3D(0.0f, 0.0f, 0.0001f), true, Vector3D(0.0f, 0.0f, 0.00000001f), Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.0f, 0.0f, 0.0f)));
+	gameObject = new GameObject("donut", new Appearance(herculesGeometry, shinyMaterial), transform2, new PhysicsModel(transform2));
 	gameObject->GetAppearance()->SetTextureRV(_pTextureRV);
+	gameObject->SetIsStatic(true);
 
 	_gameObjects.push_back(gameObject);
 
@@ -665,32 +668,34 @@ void Application::Cleanup()
 void Application::moveForward(int objectNumber)
 {
 	Vector3D position = _gameObjects[objectNumber]->GetTransform()->GetPosition();
-	position.z -= 0.02f;
+	position.z -= 0.1f;
+
 	_gameObjects[objectNumber]->GetTransform()->SetPosition(position);
 }
 
 void Application::moveBackward(int objectNumber)
 {
 	Vector3D position = _gameObjects[objectNumber]->GetTransform()->GetPosition();
-	position.z += 0.02f;
+	position.z += 0.1f;
+
 	_gameObjects[objectNumber]->GetTransform()->SetPosition(position);
 }
 
 void Application::Update()
 {
-    // Update our time
-    static float deltaTime = 0.0f;
-    static DWORD dwTimeStart = 0;
+	static float deltaTime = 0.0f;
+	static DWORD dwTimeStart = 0;
 
-    DWORD dwTimeCur = GetTickCount64();
-
-    if (dwTimeStart == 0)
-        dwTimeStart = dwTimeCur;
-
-	deltaTime += (dwTimeCur - dwTimeStart) / 1000.0f;
-
-	if (deltaTime < FPS_60)
+	if (dwTimeStart == 0)
 	{
+		dwTimeStart = GetTickCount64();
+	}
+
+	float dwTimeCur = GetTickCount64();
+
+	deltaTime += (dwTimeCur - dwTimeStart) / 10000.0f;
+	
+	if (deltaTime < FPS_60) {
 		return;
 	}
 
@@ -715,9 +720,7 @@ void Application::Update()
 		gameObject->Update(deltaTime);
 	}
 
-	//OutputDebugStringA(("FPS: " + to_string(deltaTime) + "\n").c_str());
-
-	deltaTime = deltaTime - FPS_60;
+	deltaTime = deltaTime - (FPS_60 * 10);
 }
 
 void Application::Draw()
@@ -738,7 +741,7 @@ void Application::Draw()
 
 	_pImmediateContext->VSSetShader(_pVertexShader, nullptr, 0);
 	_pImmediateContext->PSSetShader(_pPixelShader, nullptr, 0);
-
+	
 	_pImmediateContext->VSSetConstantBuffers(0, 1, &_pConstantBuffer);
 	_pImmediateContext->PSSetConstantBuffers(0, 1, &_pConstantBuffer);
 	_pImmediateContext->PSSetSamplers(0, 1, &_pSamplerLinear);
@@ -798,48 +801,54 @@ void Application::Draw()
 
 void Application::Input()
 {
-	if (GetAsyncKeyState('1'))
+	if (GetAsyncKeyState('1') && 0x8000)
 	{
 		moveForward(1);
 	}
-	if (GetAsyncKeyState('2'))
+	if (GetAsyncKeyState('2') && 0x8000)
 	{
 		moveBackward(1);
 	}
 
-	if (GetAsyncKeyState('3'))
+	if (GetAsyncKeyState('3') && 0x8000)
 	{
 		moveForward(2);
 	}
-	if (GetAsyncKeyState('4'))
+	if (GetAsyncKeyState('4') && 0x8000)
 	{
 		moveBackward(2);
 	}
 
-	if (GetAsyncKeyState('5'))
+	if (GetAsyncKeyState('5') && 0x8000)
 	{
 		moveForward(3);
 	}
-	if (GetAsyncKeyState('6'))
+	if (GetAsyncKeyState('6') && 0x8000)
 	{
 		moveBackward(3);
 	}
 
-	if (GetAsyncKeyState('7'))
+	if (GetAsyncKeyState('7') && 0x8000)
 	{
 		moveForward(4);
 	}
-	if (GetAsyncKeyState('8'))
+	if (GetAsyncKeyState('8') && 0x8000)
 	{
 		moveBackward(4);
 	}
 
-	if (GetAsyncKeyState('9'))
+	if (GetAsyncKeyState('9') && 0x8000)
 	{
 		moveForward(5);
 	}
-	if (GetAsyncKeyState('0'))
+	if (GetAsyncKeyState('0') && 0x8000)
 	{
 		moveBackward(5);
+	}
+
+	//rotation
+	if (GetAsyncKeyState(0x52) && 0x8000)
+	{
+		_gameObjects[4]->GetTransform()->SetRotation(_gameObjects[4]->GetTransform()->GetRotation().x, _gameObjects[4]->GetTransform()->GetRotation().y - 0.08f, _gameObjects[4]->GetTransform()->GetRotation().z);
 	}
 }

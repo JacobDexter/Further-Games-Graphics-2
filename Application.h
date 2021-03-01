@@ -11,8 +11,9 @@
 #include "Structures.h"
 #include "OBJLoader.h"
 #include "Transform.h"
-
+#include "GameObject.h"
 #include <vector>
+
 /*
 //#include <SpriteFont.h>
 #include "CommonStates.h"
@@ -26,7 +27,6 @@
 #include "SpriteFont.h"
 #include "VertexTypes.h"
 */
-#include "GameObject.h"
 
 using namespace DirectX;
 

@@ -21,48 +21,39 @@
     <Filter Include="Resource Files\Imgui">
       <UniqueIdentifier>{33318531-b565-4236-96f8-02b3576ad8fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\Physics">
+      <UniqueIdentifier>{79b597dc-673b-444f-badb-8820403bc2ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Physics">
+      <UniqueIdentifier>{ccdeb177-cf5a-4715-a036-c6ac1ab95958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Utility">
+      <UniqueIdentifier>{d6e0346e-a27c-44f7-9497-a02a9dc59668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utility">
+      <UniqueIdentifier>{1cc39836-7921-4956-9288-1c16342a5bb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Object">
+      <UniqueIdentifier>{d90fac3b-3c80-43ad-928a-0fd2ca01f6ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Loaders">
+      <UniqueIdentifier>{6993df64-ed7b-40bd-85cd-513b0163f760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Loaders">
+      <UniqueIdentifier>{b2337f53-0b0b-4025-8e0c-48fa3c6d9708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object">
+      <UniqueIdentifier>{08eaf17e-c445-4b7c-a5dc-a6c4a3b488ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Debugger.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="DDSTextureLoader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OBJLoader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Structures.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3D.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleSystem.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleModel.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Appearance.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imconfig.h">
@@ -89,43 +80,49 @@
     <ClInclude Include="External\imgui\imstb_truetype.h">
       <Filter>Resource Files\Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="Debugger.h">
+      <Filter>Headers\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Headers\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Headers\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Headers\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Appearance.h">
+      <Filter>Headers\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DDSTextureLoader.h">
+      <Filter>Headers\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJLoader.h">
+      <Filter>Headers\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsModel.h">
+      <Filter>Headers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Headers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Headers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Headers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="DDSTextureLoader.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Debugger.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="OBJLoader.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Vector3D.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Particle.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleModel.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Appearance.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -145,6 +142,36 @@
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_widgets.cpp">
       <Filter>Resource Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Debugger.cpp">
+      <Filter>Source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJLoader.cpp">
+      <Filter>Source\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="DDSTextureLoader.cpp">
+      <Filter>Source\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Appearance.cpp">
+      <Filter>Source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsModel.cpp">
+      <Filter>Source\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Source\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

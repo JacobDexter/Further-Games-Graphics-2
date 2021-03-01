@@ -1,23 +1,3 @@
-﻿  Appearance.cpp
-  Application.cpp
-D:\Github\Further-Games-Graphics-2\Application.cpp(685,21): warning C4244: 'initializing': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
-  Camera.cpp
-  DDSTextureLoader.cpp
-  Debugger.cpp
-  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_impl_dx11.cpp
-  imgui_impl_win32.cpp
-  imgui_widgets.cpp
-  Main.cpp
-  GameObject.cpp
-  OBJLoader.cpp
-  Particle.cpp
-  ParticleManager.cpp
-  ParticleModel.cpp
-  ParticleSystem.cpp
-  Vector3D.cpp
-  Generating Code...
-Appearance.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  DX11 Framework.vcxproj -> D:\Github\Further-Games-Graphics-2\Debug\DX11 Framework.exe
+﻿  GameObject.cpp
+C:\Users\Jacob\OneDrive - Staffordshire University\Year 2\Further Games and Graphics\Semester 2\FGGC Framework Semester 2\GameObject.cpp(26): warning C4700: uninitialized local variable 'rotation' used
+  DX11 Framework.vcxproj -> C:\Users\Jacob\OneDrive - Staffordshire University\Year 2\Further Games and Graphics\Semester 2\FGGC Framework Semester 2\Debug\DX11 Framework.exe

@@ -30,12 +30,14 @@ public:
     //Vector operations
     float dot_product(const Vector3D& vec); //scalar dot_product
     Vector3D cross_product(const Vector3D& vec); //cross_product
-    Vector3D normalization();   //normalized vector
+    Vector3D normalization(const Vector3D& vec);   //normalized vector
 
     //Scalar operations
     float square(); //gives square of the vector
     float distance(const Vector3D& vec); //distance between two vectors
     float magnitude();  //magnitude of the vector
+    float magnitude(const Vector3D& vec);
+    Vector3D addScaledVector(const Vector3D& vector, float scale);
 
 
     //Display operations 

@@ -4,25 +4,25 @@
 class Transform
 {
 public:
-	Transform(Vector3D position, Vector3D rotation, Vector3D scale) : _position(position), _rotation(rotation), _scale(scale) { }
+	Transform(Vector3D position, Vector3D rotation, Vector3D scale) : mPosition(position), mRotation(rotation), mScale(scale) { }
 
 	// set/get
-	void SetPosition(Vector3D position) { _position = position; }
-	void SetPosition(float x, float y, float z) { _position.x = x; _position.y = y; _position.z = z; }
+	void SetPosition(Vector3D position) { mPosition = position; }
+	void SetPosition(float x, float y, float z) { mPosition.x = x; mPosition.y = y; mPosition.z = z; }
 
-	Vector3D GetPosition() const { return _position; }
+	Vector3D GetPosition() const { return mPosition; }
 
-	void SetScale(Vector3D scale) { _scale = scale; }
-	void SetScale(float x, float y, float z) { _scale.x = x; _scale.y = y; _scale.z = z; }
+	void SetScale(Vector3D scale) { mScale = scale; }
+	void SetScale(float x, float y, float z) { mScale.x = x; mScale.y = y; mScale.z = z; }
 
-	Vector3D GetScale() const { return _scale; }
+	Vector3D GetScale() const { return mScale; }
 
-	void SetRotation(Vector3D rotation) { _rotation = rotation; }
-	void SetRotation(float x, float y, float z) { _rotation.x = x; _rotation.y = y; _rotation.z = z; }
+	void SetRotation(Vector3D rotation) { mRotation = rotation; }
+	void SetRotation(float x, float y, float z) { mRotation.x = x; mRotation.y = y; mRotation.z = z; }
 
-	Vector3D GetRotation() const { return _rotation; }
+	Vector3D GetRotation() const { return mRotation; }
 private:
-	Vector3D _position;
-	Vector3D _rotation;
-	Vector3D _scale;
+	Vector3D mPosition;
+	Vector3D mRotation;
+	Vector3D mScale;
 };

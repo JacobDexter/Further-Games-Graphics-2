@@ -125,16 +125,36 @@ float Vector3D::magnitude()
     return sqrt(square());
 }
 
+//find magnitude of vector
+float Vector3D::magnitude(const Vector3D& vec)
+{
+    return (sqrtf(powf(vec.x, 2) + powf(vec.y, 2) + powf(vec.z, 2)));
+}
+
+Vector3D Vector3D::addScaledVector(const Vector3D& vector, float scale)
+{
+    float x, y, z;
+    x += vector.x * scale;
+    y += vector.x * scale;
+    z += vector.x * scale;
+    return Vector3D(x, y, z);
+}
+
 float Vector3D::square()
 {
     return x * x + y * y + z * z;
 }
 
-Vector3D Vector3D::normalization()
+Vector3D Vector3D::normalization(const Vector3D& vec)
 {
-    assert(magnitude() != 0);
-    *this /= magnitude();
-    return *this;
+    Vector3D temp = vec;
+    float unitVector = sqrt((temp.x * temp.x) + (temp.y * temp.y) + (temp.z * temp.z));
+
+    temp.x = temp.x / unitVector;
+    temp.y = temp.y / unitVector;
+    temp.z = temp.z / unitVector;
+
+    return temp;
 }
 
 float Vector3D::distance(const Vector3D& vec)
