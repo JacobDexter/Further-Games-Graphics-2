@@ -15,39 +15,38 @@ public:
 	GameObject(string type, Appearance* appearance, Transform* transform, PhysicsModel* physicsModel);
 	~GameObject();
 
-	void Draw(ID3D11DeviceContext* pImmediateContext);
+	virtual void Draw(ID3D11DeviceContext* pImmediateContext);
+	virtual void Update(float t);
 
-	string GetType() const { return _type; }
+	string GetType() const { return mType; }
 
-	Transform* GetTransform() const { return _transform;  }
-	Appearance* GetAppearance() const { return _appearance;  }
-	PhysicsModel* GetPhysicsModel() const { return _physicsModel;  }
+	Transform* GetTransform() const { return mTransform;  }
+	Appearance* GetAppearance() const { return mAppearance;  }
+	PhysicsModel* GetPhysicsModel() const { return mPhysicsModel;  }
 
-	XMMATRIX GetWorldMatrix() const { return XMLoadFloat4x4(&_world); }
-	XMFLOAT4X4 GetWorldFloat4X4() const { return _world; }
+	XMMATRIX GetWorldMatrix() const { return XMLoadFloat4x4(&mWorld); }
+	XMFLOAT4X4 GetWorldFloat4X4() const { return mWorld; }
 
 	Quaternion GetQuaternion() const { return mQuaternion; }
 	void SetQuaternion(Quaternion quaternion) { mQuaternion = quaternion; }
 
-	bool GetIsStatic() const { return _isStatic; }
-	void SetIsStatic(bool isStatic) { _isStatic = isStatic; }
+	bool GetIsStatic() const { return mIsStatic; }
+	void SetIsStatic(bool isStatic) { mIsStatic = isStatic; }
 
-	void SetParent(GameObject* parent) { _parent = parent; }
+	void SetParent(GameObject* parent) { mParent = parent; }
 
-	void Update(float t);
-
-private:
-	XMFLOAT4X4 _world = XMFLOAT4X4();
+protected:
+	XMFLOAT4X4 mWorld = XMFLOAT4X4();
 	Quaternion mQuaternion;
 
 	//componenets
-	Transform* _transform;
-	Appearance* _appearance;
-	PhysicsModel* _physicsModel;
-	GameObject* _parent;
+	Transform* mTransform;
+	Appearance* mAppearance;
+	PhysicsModel* mPhysicsModel;
+	GameObject* mParent;
 
-	string _type;
+	string mType;
 
-	bool _isStatic;
+	bool mIsStatic = false;
 };
 

@@ -5,6 +5,7 @@
 #include <vector>
 #include "Particle.h"
 #include "GameObject.h"
+#include "Structures.h"
 
 using namespace std;
 
@@ -15,10 +16,10 @@ public:
 	ParticleSystem(Transform* transform, int maxParticles);
 	~ParticleSystem();
 
-	void Draw();
+	void Draw(ID3D11DeviceContext* pImmediateContext, ConstantBuffer cb, ID3D11Buffer* constantBuffer);
 	void Update(float t);
 
-	void CreateParticles(int num, Vector3D position, Vector3D rotation, Vector3D scale, Vector3D color, float mass, float lifeSpan);
+	void CreateParticles(int num, Geometry geometry, Material material, Vector3D rotation, Vector3D scale, Vector3D color, float mass, float lifeSpan);
 
 	//get/set
 	XMMATRIX GetWorldMatrix() const { return XMLoadFloat4x4(&mWorld); }

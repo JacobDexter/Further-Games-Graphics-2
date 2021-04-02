@@ -1,39 +1,44 @@
 #include "GameObject.h"
 
-GameObject::GameObject(string type, Appearance* appearance, Transform* transform, PhysicsModel* physicsModel) : _type(type), _appearance(appearance), _transform(transform), _physicsModel(physicsModel)
+GameObject::GameObject(string type, Appearance* appearance, Transform* transform, PhysicsModel* physicsModel) : mType(type), mAppearance(appearance), mTransform(transform), mPhysicsModel(physicsModel)
 {
-	_parent = nullptr;
+	mParent = nullptr;
 }
 
 GameObject::~GameObject()
 {
-	if (_transform) delete _transform; 
-	if (_appearance) delete _appearance;
-	if (_physicsModel) delete _physicsModel;
-	if (_parent) delete _parent;
+	if (mTransform) delete mTransform; 
+	if (mAppearance) delete mAppearance;
+	if (mPhysicsModel) delete mPhysicsModel;
+	if (mParent) delete mParent;
 }
 
 void GameObject::Update(float t)
 {
 	// Calculate world matrix
-	XMMATRIX scale = XMMatrixScaling(_transform->GetScale().x, _transform->GetScale().y, _transform->GetScale().z);
-	XMMATRIX rotation = XMMatrixRotationX(_transform->GetRotation().x) * XMMatrixRotationY(_transform->GetRotation().y) * XMMatrixRotationZ(_transform->GetRotation().z);
-	XMMATRIX translation = XMMatrixTranslation(_transform->GetPosition().x, _transform->GetPosition().y, _transform->GetPosition().z);
+	XMMATRIX scale = XMMatrixScaling(mTransform->GetScale().x, mTransform->GetScale().y, mTransform->GetScale().z);
+	XMMATRIX rotation = XMMatrixRotationX(mTransform->GetRotation().x) * XMMatrixRotationY(mTransform->GetRotation().y) * XMMatrixRotationZ(mTransform->GetRotation().z);
+	XMMATRIX translation = XMMatrixTranslation(mTransform->GetPosition().x, mTransform->GetPosition().y, mTransform->GetPosition().z);
 
-	XMStoreFloat4x4(&_world, scale * rotation * translation);
-	
-	if (!_isStatic)
+	XMStoreFloat4x4(&mWorld, scale * rotation * translation);
+
+	if (!mIsStatic)
 	{
-		_physicsModel->Update(1.0f / t);
+		mPhysicsModel->Update(1.0f / t);
 	}
 
-	if (_parent != nullptr)
+	if (mType == "Particle")
 	{
-		XMStoreFloat4x4(&_world, XMLoadFloat4x4(&_world) * _parent->GetWorldMatrix());
+		OutputDebugStringA((to_string(mTransform->GetPosition().x) + " - " + to_string(mTransform->GetPosition().y) + " - " + to_string(mTransform->GetPosition().z) + "\n").c_str());
+	}
+
+	if (mParent != nullptr)
+	{
+		XMStoreFloat4x4(&mWorld, XMLoadFloat4x4(&mWorld) * mParent->GetWorldMatrix());
 	}
 }
 
 void GameObject::Draw(ID3D11DeviceContext* pImmediateContext)
 {
-	_appearance->Draw(pImmediateContext);
+	mAppearance->Draw(pImmediateContext);
 }

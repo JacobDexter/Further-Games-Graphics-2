@@ -2,42 +2,35 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include <DirectXMath.h>
-#include "Transform.h"
-#include "PhysicsModel.h"
+#include "GameObject.h"
+#include "Timer.h"
 
 using namespace DirectX;
 
-class Particle
+class Particle : public GameObject
 {
 public:
-	Particle(Transform* systemTransform, Transform* transform, PhysicsModel* physicsModel, Vector3D color, float lifeSpan);
+	Particle(string type, Appearance* appearance, Transform* transform, Transform* systemTransform, PhysicsModel* physicsModel, Vector3D color, float lifeSpan);
 	~Particle();
 
-	void Draw();
-	void Update(float t);
+	void Draw(ID3D11DeviceContext* pImmediateContext) override;
+	void Update(float t) override;
 
-	void EnableParticle() { isDisabled = false; }
-	void DisableParticle() { isDisabled = true; }
+	void MovementForces(); //temp
+
+	void EnableParticle() { mIsDisabled = false; }
+	void DisableParticle() { mIsDisabled = true; }
 	void ResetParticlePosition();
 
-	//get/set
-	XMMATRIX GetWorldMatrix() const { return XMLoadFloat4x4(&mWorld); }
-	XMFLOAT4X4 GetWorldFloat4X4() const { return mWorld; }
-
-	Transform* GetTransform() const { return mTransform; }
-	PhysicsModel* GetPhysicsModel() const { return mPhysicsModel; }
 private:
 	//components
-	Transform* mTransform;
 	Transform* mParentTransform;
-	PhysicsModel* mPhysicsModel;
 
 	//properties
-	XMFLOAT4X4 mWorld = XMFLOAT4X4();
 	Vector3D mColor;
-	float mlifeSpan;
-	bool isDisabled = false;
+	float mLifeSpan;
+	Timer mCurrentLife;
+	bool mIsDisabled = false;
 };
 
 #endif

@@ -13,6 +13,7 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include <vector>
+#include "ParticleManager.h"
 
 /*
 //#include <SpriteFont.h>
@@ -30,47 +31,8 @@
 
 using namespace DirectX;
 
-//struct SimpleVertex
-//{
-//    XMFLOAT3 PosL;
-//	XMFLOAT3 NormL;
-//	XMFLOAT2 Tex;
-//};
-
 #define NUMBER_OF_CUBES 5
 #define FPS_60 60 - 1.0f/60.0f
-
-
-struct SurfaceInfo
-{
-	XMFLOAT4 AmbientMtrl;
-	XMFLOAT4 DiffuseMtrl;
-	XMFLOAT4 SpecularMtrl;
-};
-
-struct Light
-{
-	XMFLOAT4 AmbientLight;
-	XMFLOAT4 DiffuseLight;
-	XMFLOAT4 SpecularLight;
-
-	float SpecularPower;
-	XMFLOAT3 LightVecW;
-};
-
-struct ConstantBuffer
-{
-	XMMATRIX World;
-	XMMATRIX View;
-	XMMATRIX Projection;
-	
-	SurfaceInfo surface;
-
-	Light light;
-
-	XMFLOAT3 EyePosW;
-	float HasTexture;
-};
 
 class Application
 {
@@ -125,6 +87,11 @@ private:
 	// Render dimensions - Change here to alter screen resolution
 	UINT _renderHeight = 1080;
 	UINT _renderWidth = 1920;
+
+	//particle variables
+	ParticleManager* _particleManager;
+	Geometry particleGeometry;
+	Material particleMaterial;
 
 	ID3D11DepthStencilState* DSLessEqual;
 	ID3D11RasterizerState* RSCullNone;

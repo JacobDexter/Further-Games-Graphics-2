@@ -74,8 +74,8 @@ Application::Application()
 	CWcullMode= nullptr;
 	DSLessEqual = nullptr;
 	RSCullNone = nullptr;
-	 _WindowHeight = 0;
-	 _WindowWidth = 0;
+	_WindowHeight = 0;
+	_WindowWidth = 0;
 }
 
 Application::~Application()
@@ -113,6 +113,9 @@ HRESULT Application::Initialise(HINSTANCE hInstance, int nCmdShow)
 
 	_camera = new Camera(eye, at, up, (float)_renderWidth, (float)_renderHeight, 0.01f, 200.0f);
 
+	//setup managers
+	_particleManager = new ParticleManager();
+
 	// Setup the scene's light
 	basicLight.AmbientLight = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
 	basicLight.DiffuseLight = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -135,6 +138,8 @@ HRESULT Application::Initialise(HINSTANCE hInstance, int nCmdShow)
 	cubeGeometry.vertexBufferOffset = 0;
 	cubeGeometry.vertexBufferStride = sizeof(SimpleVertex);
 
+	particleGeometry = cubeGeometry;
+
 	Geometry planeGeometry;
 	planeGeometry.indexBuffer = _pPlaneIndexBuffer;
 	planeGeometry.vertexBuffer = _pPlaneVertexBuffer;
@@ -147,6 +152,8 @@ HRESULT Application::Initialise(HINSTANCE hInstance, int nCmdShow)
 	shinyMaterial.diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	shinyMaterial.specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
 	shinyMaterial.specularPower = 10.0f;
+
+	particleMaterial = shinyMaterial;
 
 	Material noSpecMaterial;
 	noSpecMaterial.ambient = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);
@@ -177,6 +184,14 @@ HRESULT Application::Initialise(HINSTANCE hInstance, int nCmdShow)
 	gameObject->SetIsStatic(true);
 
 	_gameObjects.push_back(gameObject);
+
+	//create particle systems
+	Transform* transform3 = new Transform(Vector3D(7.0f, 0.5f, 10.0f), Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.5f, 0.5f, 0.5f));
+	_particleManager->CreateParticleSystem(transform3, 100);
+
+	//create particles
+	_particleManager->GetParticleSystems()[0]->CreateParticles(10, particleGeometry, particleMaterial, Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.1f, 0.1f, 0.1f), Vector3D(0.0f, 0.0f, 0.0f), 1.0f, 5000.0f);
+	_particleManager->GetParticleSystems()[0]->CreateParticles(10, particleGeometry, particleMaterial, Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.1f, 0.1f, 0.1f), Vector3D(0.0f, 0.0f, 0.0f), 1.0f, 5000.0f);
 
 	return S_OK;
 }
@@ -397,7 +412,7 @@ HRESULT Application::InitIndexBuffer()
 	InitData.pSysMem = planeIndices;
 	hr = _pd3dDevice->CreateBuffer(&bd, &InitData, &_pPlaneIndexBuffer);
 
-	if (FAILED(hr))
+	if (FAILED(hr)) 
 		return hr;
 
 	return S_OK;
@@ -719,6 +734,8 @@ void Application::Update()
 	{
 		gameObject->Update(deltaTime);
 	}
+	
+	_particleManager->GetParticleSystems()[0]->Update(deltaTime);
 
 	deltaTime = deltaTime - (FPS_60 * 10);
 }
@@ -792,6 +809,8 @@ void Application::Draw()
 		// Draw object
 		gameObject->Draw(_pImmediateContext);
 	}
+
+	_particleManager->GetParticleSystems()[0]->Draw(_pImmediateContext, cb, _pConstantBuffer);
 
     //
     // Present our back buffer to our front buffer

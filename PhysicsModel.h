@@ -20,6 +20,8 @@ public:
 	Vector3D GetDrag() const { return mDrag; }
 	void SetDrag(Vector3D drag) { mDrag = drag; }
 
+	Vector3D GetNetForce() const { return mNetForce; }
+
 	//set/get object properties
 	float GetMass() const { return mMass; }
 	void SetMass(float mass) { mMass = mass; }

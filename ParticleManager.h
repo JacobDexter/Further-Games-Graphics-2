@@ -13,7 +13,8 @@ public:
 	ParticleManager();
 	~ParticleManager();
 
-	void CreateParticleSystem();
+	void CreateParticleSystem(Transform* transform, GameObject* parent, int maxParticles);
+	void CreateParticleSystem(Transform* transform, int maxParticles);
 	void RemoveParticleSystem();
 
 	void EnableParticleSystem();
