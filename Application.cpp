@@ -140,12 +140,8 @@ HRESULT Application::Initialise(HINSTANCE hInstance, int nCmdShow)
 
 	particleGeometry = cubeGeometry;
 
-	Geometry planeGeometry;
-	planeGeometry.indexBuffer = _pPlaneIndexBuffer;
-	planeGeometry.vertexBuffer = _pPlaneVertexBuffer;
-	planeGeometry.numberOfIndices = 6;
-	planeGeometry.vertexBufferOffset = 0;
-	planeGeometry.vertexBufferStride = sizeof(SimpleVertex);
+	//Terrain
+	Geometry planeGeometry = TerrainGenerator::GenerateTerrainMesh(10, 10, 1.0f, 1.0f, _pd3dDevice);
 
 	Material shinyMaterial;
 	shinyMaterial.ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
@@ -161,8 +157,8 @@ HRESULT Application::Initialise(HINSTANCE hInstance, int nCmdShow)
 	noSpecMaterial.specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 	noSpecMaterial.specularPower = 0.0f;
 
-	Transform* transform = new Transform(Vector3D(0.0f, 0.0f, 0.0f), Vector3D(XMConvertToRadians(90.0f), 0.0f, 0.0f), Vector3D(15.0f, 15.0f, 15.0f));
-	GameObject* gameObject = new GameObject("Floor", new Appearance(planeGeometry, noSpecMaterial), transform, new PhysicsModel(transform));
+	Transform* transform = new Transform(Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.0f, 0.0f, 0.0f), Vector3D(1.0f, 1.0f, 1.0f));
+	GameObject* gameObject = new GameObject("Terrain", new Appearance(planeGeometry, noSpecMaterial), transform, new PhysicsModel(transform));
 	gameObject->GetAppearance()->SetTextureRV(_pGroundTextureRV);
 	gameObject->SetIsStatic(true);
 
@@ -620,7 +616,7 @@ HRESULT Application::InitDevice()
 
 	ZeroMemory(&cmdesc, sizeof(D3D11_RASTERIZER_DESC));
 
-	cmdesc.FillMode = D3D11_FILL_SOLID;
+	cmdesc.FillMode = D3D11_FILL_WIREFRAME;
 	cmdesc.CullMode = D3D11_CULL_BACK;
 
 	cmdesc.FrontCounterClockwise = true;
@@ -628,6 +624,8 @@ HRESULT Application::InitDevice()
 
 	cmdesc.FrontCounterClockwise = false;
 	hr = _pd3dDevice->CreateRasterizerState(&cmdesc, &CWcullMode);
+
+	_pImmediateContext->RSSetState(CCWcullMode);
 
     return S_OK;
 }

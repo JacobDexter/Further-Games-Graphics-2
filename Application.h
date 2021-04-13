@@ -14,6 +14,7 @@
 #include "GameObject.h"
 #include <vector>
 #include "ParticleManager.h"
+#include "TerrainGenerator.h"
 
 /*
 //#include <SpriteFont.h>

@@ -1,36 +1,32 @@
-﻿  Appearance.cpp
-  Application.cpp
-D:\Github\Further-Games-Graphics-2\Application.cpp(706,31): warning C4244: '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
-D:\Github\Further-Games-Graphics-2\Application.cpp(709,18): warning C4244: 'initializing': conversion from 'ULONGLONG' to 'float', possible loss of data
-  Camera.cpp
-  DDSTextureLoader.cpp
-  Debugger.cpp
-  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_impl_dx11.cpp
-  imgui_impl_win32.cpp
-  imgui_widgets.cpp
-  Main.cpp
-  GameObject.cpp
-  OBJLoader.cpp
-  Particle.cpp
-  ParticleManager.cpp
-  ParticleSystem.cpp
-D:\Github\Further-Games-Graphics-2\ParticleSystem.cpp(52,25): warning C4018: '>=': signed/unsigned mismatch
-  PhysicsModel.cpp
-D:\Github\Further-Games-Graphics-2\PhysicsModel.cpp(55,44): warning C4100: 'deltaTime': unreferenced formal parameter
-  Timer.cpp
-  Vector3D.cpp
-D:\Github\Further-Games-Graphics-2\Vector3D.cpp(136,12): warning C4458: declaration of 'x' hides class member
-D:\Github\Further-Games-Graphics-2\Vector3D.h(12,11): message : see declaration of 'Vector3D::x'
-D:\Github\Further-Games-Graphics-2\Vector3D.cpp(136,15): warning C4458: declaration of 'y' hides class member
-D:\Github\Further-Games-Graphics-2\Vector3D.h(12,14): message : see declaration of 'Vector3D::y'
-D:\Github\Further-Games-Graphics-2\Vector3D.cpp(136,18): warning C4458: declaration of 'z' hides class member
-D:\Github\Further-Games-Graphics-2\Vector3D.h(12,17): message : see declaration of 'Vector3D::z'
-  Generating Code...
-D:\Github\Further-Games-Graphics-2\Vector3D.cpp(137): warning C4700: uninitialized local variable 'x' used
-D:\Github\Further-Games-Graphics-2\Vector3D.cpp(138): warning C4700: uninitialized local variable 'y' used
-D:\Github\Further-Games-Graphics-2\Vector3D.cpp(139): warning C4700: uninitialized local variable 'z' used
-Appearance.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+﻿  TerrainGenerator.cpp
+D:\Github\Further-Games-Graphics-2\TerrainGenerator.cpp(100,30): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=WORD
+          ]
+D:\Github\Further-Games-Graphics-2\TerrainGenerator.cpp(101,34): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=WORD
+          ]
+D:\Github\Further-Games-Graphics-2\TerrainGenerator.cpp(102,36): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=WORD
+          ]
+D:\Github\Further-Games-Graphics-2\TerrainGenerator.cpp(105,36): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=WORD
+          ]
+D:\Github\Further-Games-Graphics-2\TerrainGenerator.cpp(106,34): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=WORD
+          ]
+D:\Github\Further-Games-Graphics-2\TerrainGenerator.cpp(107,40): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=WORD
+          ]
   DX11 Framework.vcxproj -> D:\Github\Further-Games-Graphics-2\Debug\DX11 Framework.exe
