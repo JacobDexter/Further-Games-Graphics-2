@@ -42,3 +42,51 @@ void GameObject::Draw(ID3D11DeviceContext* pImmediateContext)
 {
 	mAppearance->Draw(pImmediateContext);
 }
+
+void GameObject::CollisionAABB(GameObject* object, const float dt) noexcept
+{
+    // adjust x/z collision scaling for pressure plate
+    static float offset = 0.5f;
+
+    // test collision between cube and given object
+        //x coll
+    if ((mTransform->GetPosition().x - offset <= object->GetTransform()->GetPosition().x + offset &&
+        mTransform->GetPosition().x + offset >= object->GetTransform()->GetPosition().x - offset) &&
+        //y coll
+        (mTransform->GetPosition().y - offset <= object->GetTransform()->GetPosition().y + offset &&
+            mTransform->GetPosition().y + offset >= object->GetTransform()->GetPosition().y - offset) &&
+        //z coll
+        (mTransform->GetPosition().z - offset <= object->GetTransform()->GetPosition().z + offset &&
+            mTransform->GetPosition().z + offset >= object->GetTransform()->GetPosition().z - offset)
+        )
+    {
+        CollisionRes(object, dt);
+    }
+}
+
+void GameObject::CollisionRes(GameObject* object, const float dt) noexcept
+{
+    float velocityOne = std::max(mPhysicsModel->Magnitude(mPhysicsModel->GetNetForce()), 1.0f);
+    float velocityTwo = std::max(object->GetPhysicsModel()->Magnitude(object->GetPhysicsModel()->GetNetForce()), 1.0f);
+
+    float forceMagnitude = (mPhysicsModel->GetMass() * velocityOne + object->GetPhysicsModel()->GetMass() * velocityTwo) / dt;
+    Vector3D force;
+    force.x = object->GetTransform()->GetPosition().x - mTransform->GetPosition().x;
+    force.y = object->GetTransform()->GetPosition().y - mTransform->GetPosition().y;
+    force.z = object->GetTransform()->GetPosition().z - mTransform->GetPosition().z;
+
+    force.x = mPhysicsModel->Normalization(force).x * forceMagnitude * 0.015f;
+    force.y = mPhysicsModel->Normalization(force).y * forceMagnitude * 0.175f;
+    force.z = mPhysicsModel->Normalization(force).z * forceMagnitude * 0.015f;
+
+    Vector3D force2 = {
+        -force.x,
+        -force.y,
+        -force.z,
+    };
+
+    mPhysicsModel->AddNetForce(force2);
+    object->GetPhysicsModel()->AddNetForce(force);
+
+    OutputDebugStringA(string(mType + " has collided with " + object->GetType() + ".\n").c_str());
+}

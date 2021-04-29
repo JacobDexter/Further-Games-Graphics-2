@@ -1,4 +1,5 @@
 #pragma once
+#define NOMINMAX
 
 #include <directxmath.h>
 #include <d3d11_1.h>
@@ -34,6 +35,10 @@ public:
 	void SetIsStatic(bool isStatic) { mIsStatic = isStatic; }
 
 	void SetParent(GameObject* parent) { mParent = parent; }
+
+	//collisions
+	void CollisionAABB(GameObject* object, const float dt) noexcept;
+	void CollisionRes(GameObject* object, const float dt) noexcept;
 
 protected:
 	XMFLOAT4X4 mWorld = XMFLOAT4X4();

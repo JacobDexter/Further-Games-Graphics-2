@@ -119,7 +119,9 @@
     <ClInclude Include="Timer.h">
       <Filter>Headers\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="TerrainGenerator.h" />
+    <ClInclude Include="TerrainGenerator.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -180,7 +182,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="TerrainGenerator.cpp" />
+    <ClCompile Include="TerrainGenerator.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

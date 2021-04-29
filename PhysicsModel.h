@@ -56,10 +56,15 @@ public:
 
 	void CalculatePosition(const float deltaTime);
 	void AddGravity();
+
+	//calculations
+	float Magnitude(Vector3D vec) const noexcept;
+	Vector3D Normalization(Vector3D vec) const noexcept;
 private:
 	//constants
-	float mGravity = 9.81f;
-	float mDragFactor = 0.75f;
+	static constexpr float mGravity = 9.81f;
+	static constexpr float mDragFactor = 0.75f;
+	static constexpr float mFrictionFactor = 0.0002f;
 
 	//local property variables
 	Transform* mTransform;
@@ -67,6 +72,7 @@ private:
 	Vector3D mPosition;
 	Vector3D mNetForce;
 	Vector3D mVelocity;
+	Vector3D mFriction;
 	Vector3D mAcceleration;
 	Vector3D mDrag;
 	float mMass;

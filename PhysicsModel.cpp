@@ -25,7 +25,7 @@ void PhysicsModel::Update(const float deltaTime)
 	AddWeight();
 	AddDrag();
 	CalculateAcceleration();
-	//AddFriction(deltaTime);
+	AddFriction(deltaTime);
 	CalculateVelocity(deltaTime);
 	CalculatePosition(deltaTime);
 	AddGravity();
@@ -54,7 +54,20 @@ void PhysicsModel::CalculateVelocity(const float deltaTime)
 
 void PhysicsModel::AddFriction(const float deltaTime)
 {
-
+	// f = u * N
+	Vector3D invVelocity = { -mVelocity.x, -mVelocity.y, -mVelocity.z };
+	if (Magnitude(mVelocity) < mFrictionFactor * deltaTime)
+	{
+		mFriction.x = invVelocity.x / deltaTime;
+		mFriction.y = invVelocity.y / deltaTime;
+		mFriction.z = invVelocity.z / deltaTime;
+	}
+	else
+	{
+		mFriction.x = Normalization(invVelocity).x * mFrictionFactor;
+		mFriction.y = Normalization(invVelocity).y * mFrictionFactor;
+		mFriction.z = Normalization(invVelocity).z * mFrictionFactor;
+	}
 }
 
 void PhysicsModel::AddDrag()
@@ -74,8 +87,8 @@ void PhysicsModel::LaminarDrag()
 
 void PhysicsModel::TurbulentDrag()
 {
-	float magVelocity = mVelocity.magnitude(mVelocity);
-	Vector3D unitVelocity = mVelocity.normalization(mVelocity);
+	float magVelocity = Magnitude(mVelocity);
+	Vector3D unitVelocity = Normalization(mVelocity);
 
 	float dragMagnitude = mDragFactor * magVelocity * magVelocity;
 
@@ -110,4 +123,24 @@ void PhysicsModel::AddGravity()
 	{
 		mVelocity.y -= 0.5f;
 	}
+}
+
+float PhysicsModel::Magnitude(Vector3D vec) const noexcept
+{
+	return (sqrtf(
+		powf(vec.x, 2) +
+		powf(vec.y, 2) +
+		powf(vec.z, 2))
+		);
+}
+
+Vector3D PhysicsModel::Normalization(Vector3D vec) const noexcept
+{
+	float unitVector = sqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
+
+	vec.x = vec.x / unitVector;
+	vec.y = vec.y / unitVector;
+	vec.z = vec.z / unitVector;
+
+	return vec;
 }

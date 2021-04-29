@@ -616,8 +616,8 @@ HRESULT Application::InitDevice()
 
 	ZeroMemory(&cmdesc, sizeof(D3D11_RASTERIZER_DESC));
 
-	cmdesc.FillMode = D3D11_FILL_WIREFRAME;
-	cmdesc.CullMode = D3D11_CULL_BACK;
+	cmdesc.FillMode = D3D11_FILL_SOLID;
+	cmdesc.CullMode = D3D11_CULL_FRONT;
 
 	cmdesc.FrontCounterClockwise = true;
 	hr = _pd3dDevice->CreateRasterizerState(&cmdesc, &CCWcullMode);
@@ -681,7 +681,7 @@ void Application::Cleanup()
 void Application::moveForward(int objectNumber)
 {
 	Vector3D position = _gameObjects[objectNumber]->GetTransform()->GetPosition();
-	position.z -= 0.1f;
+	position.x -= 0.1f;
 
 	_gameObjects[objectNumber]->GetTransform()->SetPosition(position);
 }
@@ -689,7 +689,7 @@ void Application::moveForward(int objectNumber)
 void Application::moveBackward(int objectNumber)
 {
 	Vector3D position = _gameObjects[objectNumber]->GetTransform()->GetPosition();
-	position.z += 0.1f;
+	position.x += 0.1f;
 
 	_gameObjects[objectNumber]->GetTransform()->SetPosition(position);
 }
@@ -731,6 +731,10 @@ void Application::Update()
 	for (auto gameObject : _gameObjects)
 	{
 		gameObject->Update(deltaTime);
+
+		for (auto collObject : _gameObjects)
+			if(gameObject != collObject)
+				gameObject->CollisionAABB(collObject, deltaTime);
 	}
 	
 	_particleManager->GetParticleSystems()[0]->Update(deltaTime);
